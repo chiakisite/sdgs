@@ -17,8 +17,8 @@ return new class extends Migration
 		$table->id();
 		$table->foreignId('user_id')->constrained('users');
 		$table->foreignId('category_id')->constrained('categories');    
-		$table->string('image_file_name',100);
-		$table->string('image_title',100);//追加
+		//$table->string('image_file_name',100);
+		//$table->string('image_title',100);//追加
 		$table->string('title', 32);
 		$table->string('body', 2200);	
 		$table->timestamps();
