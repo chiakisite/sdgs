@@ -21,8 +21,8 @@ class PostSeeder extends Seeder
         $category = DB::table("categories")->first();
         
         DB::table('posts')->insert([
-                "user_id" => $user->id,
-                "category_id" => $category->id,
+                //"user_id" => $user->id,
+                //"category_id" => $category->id,
                 'title' => '全部かけて',
                 'body' => 'Go!',
                 'created_at' => new DateTime(),
