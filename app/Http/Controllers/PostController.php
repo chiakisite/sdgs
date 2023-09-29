@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
 use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
+use Cloudinary; 
 
 class PostController extends Controller
 {
@@ -21,9 +23,9 @@ class PostController extends Controller
        //blade内で使う変数'posts'と設定。'posts'の中身にgetを使い、インスタンス化した$postを代入。
     }
     
-    public function create(Post $post)
+    public function create(Post $post,Category $category)
     {
-        return view('posts.create')->with(['post' => $post]);
+        return view('posts.create')->with(['post' => $post,'categories' => $category->get()]);
        //blade内で使う変数'posts'と設定。'posts'の中身にgetを使い、インスタンス化した$postを代入。
     }
     
@@ -36,6 +38,8 @@ class PostController extends Controller
     public function store(Request $request, Post $post)
     {
         $input = $request['post'];
+        $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+        $input += ['image_url' => $image_url]; 
         $post->fill($input)->save();
         return redirect('/posts/' . $post->id);
     }
@@ -54,6 +58,9 @@ class PostController extends Controller
      return redirect('/');
         
     }
+    
+    
+    
     
 }
 ?>
