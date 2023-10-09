@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <title>Blog</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-    </head>
-    <body>
-        <h1>みんなのSDGs</h1>
+<x-app-layout>
+    <x-slot name="header">
+        　みんなのSDGs
+    </x-slot>
+        <h1>ブックマークした記事</h1>
+        <div>
         <div class='posts'>
             @foreach ($posts as $post)
             <div class='post'>
                 <h2 class='title'>
                     <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
                 </h2>
-                <a href="/categories/{{ $post->category->id }}">{{ $post->category->name }}</a
+                <div class="date">{{ $post->updated_at }}</div>
+                <a href="/categories/{{ $post->category->id }}">{{ $post->category->name }}</a>
                 <div>
                     <img src="{{ $post->image_url }}" alt="画像が読み込めません。"/>
                 </div>
@@ -25,14 +22,27 @@
                 <button type="button" onclick="deletePost({{ $post->id }})">delete</button> 
                 </form>
             </div>
+            <small>{{ $post->user->name }}</small>
+            <div class="article-control">
+            @if (!Auth::user()->is_bookmark($post->id))
+           <form action="/posts/{{$post->id}}/bookmark" method='post'>
+                @csrf
+                <button>お気に入り登録</button>
+            </form>
+            @else
+            <form action="/posts/{{$post->id}}/unbookmark" method='post'>
+                @csrf
+                @method('delete')
+                <button>お気に入り解除</button>
+            </form>
+            @endif
+            </div>
             @endforeach
         </div>
-        <div class='paginate'>
-            {{ $posts->links() }}
-        </div>
+        <li><a class="tab-item{{ Request::is('bookmarks') ? ' active' : ''}}" href="{{ route('bookmarks') }}">ブックマーク</a></li>
         <a href='/posts/create'>create</a>
         
-    </body>
+</x-app-layout>
     <script>
     function deletePost(id) {
         'use strict'
@@ -42,4 +52,3 @@
         }
     }
 </script>
-</html>
