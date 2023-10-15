@@ -73,9 +73,4 @@ public function getOwnPaginateByLimit(int $limit_count = 5)
     {
         return $this->bookmarks()->where('post_id', $postId)->exists();
     }
-    
-        public function profile()
-    {
-        return $this->hasOne(Profile::class);
-    }
 }
