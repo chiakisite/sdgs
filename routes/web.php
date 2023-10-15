@@ -18,9 +18,10 @@ use App\Http\Controllers\BookmarkController;
 */
 
 Route::controller(BookmarkController::class)->middleware(['auth'])->group(function(){
+    Route::get('/bookmarks','bookmark_posts')->name('bookmarks');
+    Route::post('/posts/{post}/bookmark','store')->name('bookmark.store');
     Route::post('/posts/{post}/bookmark','store')->name('bookmark.store');
     Route::delete('/posts/{post}/unbookmark','destroy')->name('bookmark.destroy');
-    Route::get('/bookmarks','bookmark_posts')->name('bookmarks');
 });
 
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
@@ -45,7 +46,7 @@ Route::get('/user', [ UserController::class, 'index'])->middleware(['auth'])->na
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

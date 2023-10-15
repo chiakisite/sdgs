@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 
 class BookmarkController extends Controller
 {
+    
+    public function bookmark_posts()
+    {
+        $posts = \Auth::user()->bookmark_posts()->orderBy('created_at', 'desc')->paginate(10);
+        $data = [
+            'posts' => $posts,
+        ];
+        return view('posts.bookmarks', $data);
+    }
+    
     public function store($postId) {
         $user = \Auth::user();
         if (!$user->is_bookmark($postId)) {
@@ -24,12 +34,4 @@ class BookmarkController extends Controller
         return back();
     }
     
-        public function bookmark_posts()
-    {
-        $posts = \Auth::user()->bookmark_posts()->orderBy('created_at', 'desc')->paginate(10);
-        $data = [
-            'posts' => $posts,
-        ];
-        return view('posts.bookmarks', $data);
-    }
 }

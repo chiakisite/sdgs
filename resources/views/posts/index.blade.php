@@ -1,8 +1,6 @@
+<link href="../css/app.css" rel="stylesheet">
 <x-app-layout>
-    <x-slot name="header">
-        　みんなのSDGs
-    </x-slot>
-        <h1>みんなのSDGs</h1>
+        <h1　class="text-2xl">みんなのSDGs</h1>
         <div>
          <form action="{{route('index')}}" method="GET">
             <input type="text" name="keyword">
@@ -28,10 +26,10 @@
                 </form>
                 @endcan
             </div>
-            <small>{{ $post->user->name }}</small>
+            <small>{{ $post->user->nickname }}</small>
             <div class="article-control">
             @if (!Auth::user()->is_bookmark($post->id))
-           <form action="/posts/{{$post->id}}/bookmark" method='post'>
+           <form action="/posts/{{$post->id}}/bookmark" crethod='post'>
                 @csrf
                 <button>お気に入り登録</button>
             </form>
@@ -47,9 +45,8 @@
         </div>
         <li><a class="tab-item{{ Request::is('bookmarks') ? ' active' : ''}}" href="{{ route('bookmarks') }}">ブックマーク</a></li>
         <a href='/posts/create'>create</a>
-        
 </x-app-layout>
-    <script>
+<script>
     function deletePost(id) {
         'use strict'
 

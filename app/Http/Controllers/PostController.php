@@ -30,7 +30,6 @@ class PostController extends Controller
         }
 
         $posts = $query->orderBy('updated_at','desc')->paginate(5);
-        
         return view('posts.index', compact('posts', 'keyword'));
        //blade内で使う変数'posts'と設定。'posts'の中身にgetを使い、インスタンス化した$postを代入。
     }
