@@ -16,10 +16,9 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
 		$table->id();
 		$table->foreignId('user_id')->constrained('users');
-		$table->string('nickname', 64);
-		$table->string('bio', 150);
-		$table->string('image_file_name',100);
-		$table->string('image_title',100);
+		$table->string('nickname', 64)->nullable();
+		$table->string('bio', 150)->nullable();
+		$table->string('image_file_name',100)->nullable();
 		$table->timestamps();
         });
     }

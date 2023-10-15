@@ -15,7 +15,7 @@
 
     <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
         @csrf
-        @method('patch')
+        @method('put')
 
         <div>
             <x-input-label for="name" :value="__('Name')" />
@@ -27,6 +27,7 @@
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
+    
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
@@ -45,6 +46,12 @@
                     @endif
                 </div>
             @endif
+        </div>
+        
+        <div>
+            <x-input-label for="nickname" :value="__('Nickname')" />
+            <x-text-input id="nickname" name="nickname" type="text" class="mt-1 block w-full" :value="old('nickname', $user->nickname)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
         <div class="flex items-center gap-4">
